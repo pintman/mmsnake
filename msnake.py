@@ -156,18 +156,11 @@ class MSnake:
         frame_time = 1 / fps
 
         while self.game_running:
-            print("tick")
             last_update = time.time()
             self.move_snakes()
-
-            # if pills have been eaten, fill up with new ones
-            self.fill_pills()
-
-            #self.handle_input()
-
+            self.fill_pills()  # if pills have been eaten, fill up with new one
             self.publish_board()
-            
-            self.mqtt.loop()
+            self.mqtt.loop()  # procesing mqtt network events
 
             # keep game clock in sync
             delta = time.time() - last_update
