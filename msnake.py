@@ -152,6 +152,7 @@ class MSnake:
         self.mqtt.publish(self.world_topic, json.dumps(payload))
 
     def run(self, fps):
+        logging.info(f'starting game loop with {fps} fps')
         self.game_running = True
         frame_time = 1 / fps
 
@@ -166,6 +167,8 @@ class MSnake:
             delta = time.time() - last_update
             if delta < frame_time:
                 time.sleep(frame_time - delta)
+            else:
+                logging.warn("frame rate too high")
 
 def test_msnake():
     msnake = MSnake(mqtthost='mqtt.eclipse.org', 
@@ -189,7 +192,7 @@ def test_msnake():
     assert heady == 3
 
 def main():
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(format='%(levelname)s\t%(message)s', level=logging.DEBUG)
     msnake = MSnake(MQTTHOST, TOPICS_SNAKE_MOVE, TOPIC_WORLD, 
         MAX_PILLS, FIELD_LENGTH)
     msnake.add_snake(Snake('1', 2, 2))
