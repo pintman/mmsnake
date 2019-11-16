@@ -68,7 +68,6 @@ def test_turtle_run():
     import multiprocessing
     import time
 
-    world_topic = 'test/msnake/world'
     engine = multiprocessing.Process(
         target=msnake.main,
         args=(5,), # snakes
@@ -78,7 +77,7 @@ def test_turtle_run():
 
     pt = multiprocessing.Process(
         target=main,
-        args=('mqtt.eclipse.org', world_topic),
+        args=(msnake.MQTTHOST, msnake.TOPIC_WORLD),
         daemon=True
     )
     pt.start()
