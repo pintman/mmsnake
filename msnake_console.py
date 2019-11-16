@@ -35,16 +35,14 @@ def on_world_message(client, userdata, msg):
     print(f'| FPS(Server):{fps} FPS(local):{round(fps_local, 2)} ' \
           f'SNAKES:{len(snakes)} PILLS:{len(pills)}')
 
-def main(mqtt_host, world_topic, fps):
+def main(mqtt_host, world_topic):
     mqtt = paho.mqtt.client.Client()
     ud = {'last_msg': time.time()}
     mqtt.user_data_set(ud)
     mqtt.on_message = on_world_message
     mqtt.connect(msnake.MQTTHOST)
     mqtt.subscribe(msnake.TOPIC_WORLD)
-    while True:
-        mqtt.loop()
-        time.sleep(1 / msnake.FPS)
+    mqtt.loop_forever()
 
 def test_console():
     import multiprocessing
@@ -59,4 +57,4 @@ def test_console():
     print("finished")
 
 if __name__ == '__main__':
-    main(msnake.MQTTHOST, msnake.TOPIC_WORLD, msnake.FPS)
+    main(msnake.MQTTHOST, msnake.TOPIC_WORLD)
