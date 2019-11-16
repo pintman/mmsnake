@@ -191,6 +191,27 @@ def test_msnake():
     assert 2 < headx < 9
     assert heady == 3
 
+def test_manysnakes_large_world():
+    msnake = MSnake(mqtthost='mqtt.eclipse.org', 
+        snake_topics='test/msnake/snake/+/move', 
+        world_topic='test/msnake/world', 
+        field_length=100)
+
+    num_snakes = 100
+    for i in range(num_snakes):
+        snake = Snake(str(i), random.randint(0, 10), random.randint(0, 10))
+        msnake.add_snake(snake)
+
+    # start game for some seconds
+    from threading import Thread
+    th = Thread(target=msnake.run, args=(5,))
+    th.start()
+    time.sleep(3)
+    msnake.game_running = False
+    th.join()
+
+    assert len(msnake.snakes) <= num_snakes
+
 def main():
     logging.basicConfig(format='%(levelname)s\t%(message)s', level=logging.DEBUG)
     msnake = MSnake(MQTTHOST, TOPICS_SNAKE_MOVE, TOPIC_WORLD, 
