@@ -4,6 +4,9 @@ MQTT_HOST=mqtt.eclipse.org
 run: venv
 	$(PY) msnake.py
 		
+console: venv
+	$(PY) msnake_console.py
+
 venv: requirements.txt
 	python3 -m venv venv
 	touch venv
