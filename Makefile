@@ -9,4 +9,7 @@ venv: requirements.txt
 	venv/bin/pip install --upgrade pip
 	venv/bin/pip install -r requirements.txt
 
+test: venv
+	venv/bin/pytest -v *py
+
 
