@@ -1,4 +1,5 @@
 PY=venv/bin/python
+MQTT_HOST=mqtt.eclipse.org
 
 run: venv
 	$(PY) msnake.py
@@ -13,3 +14,5 @@ test: venv
 	venv/bin/pytest -v *py
 
 
+pub1:
+	mosquitto_pub -t msnake/snake/1/move -m up -h $(MQTT_HOST)
