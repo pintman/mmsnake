@@ -12,6 +12,8 @@ def on_world_message(client, userdata, msg):
     snakes = world['snakes']
     pills = world['pills']
     fps = world['fps']
+    fps_local = 1 / (time.time() - userdata['last_msg'])
+    userdata['last_msg'] = time.time()
 
     s = [' '] * (width * height)  # empty screen
     
@@ -30,10 +32,13 @@ def on_world_message(client, userdata, msg):
         line_end = line_start + width
         line = ''.join(s[line_start:line_end])
         print('|', line, '|')
-    print(f'| FPS:{fps} SNAKES:{len(snakes)} PILLS:{len(pills)}')
+    print(f'| FPS(Server):{fps} FPS(local):{round(fps_local, 2)} ' \
+          f'SNAKES:{len(snakes)} PILLS:{len(pills)}')
 
 def main(mqtt_host, world_topic, fps):
     mqtt = paho.mqtt.client.Client()
+    ud = {'last_msg': time.time()}
+    mqtt.user_data_set(ud)
     mqtt.on_message = on_world_message
     mqtt.connect(msnake.MQTTHOST)
     mqtt.subscribe(msnake.TOPIC_WORLD)
