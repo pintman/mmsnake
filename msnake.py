@@ -74,11 +74,13 @@ class MSnake:
         self.game_running = False
 
     def add_snake(self, snake:Snake):
+        'add a new snake to the game world.'
         logging.debug(f'added snake {snake.id}')
         self.snakes[snake.id] = snake
         self.snake_bodies.extend(snake.body)
 
-    def move_snakes(self):
+    def process_snakes(self):
+        'move all snakes. lets them eat pills. kill them if necessary.'
         new_snake_bodies = []
         dead_snake_ids = []
         for snake in self.snakes.values():
@@ -113,8 +115,8 @@ class MSnake:
         while len(self.pills) < self.max_pills:
             self.create_new_pill()
 
-
     def create_new_pill(self):
+        'create a new pill at random but empty position in the world.'
         new_pill = None
         while new_pill is None or new_pill in self.snake_bodies or\
                 new_pill in self.pills:
@@ -138,6 +140,7 @@ class MSnake:
             snake.right()
 
     def _snakes_json(self):
+        'Return snakes as dictionary that can be converted to json.'
         d = {}
         for snake in self.snakes.values():
             d[snake.id] = { "body": snake.body, "direction": snake.direction }
@@ -145,6 +148,7 @@ class MSnake:
         return d
 
     def publish_board(self):
+        'publish snakes and pills to the world topic.'
         payload = {}
         payload["snakes"] = self._snakes_json()
         payload["pills"] = self.pills
@@ -152,13 +156,15 @@ class MSnake:
         self.mqtt.publish(self.world_topic, json.dumps(payload))
 
     def run(self, fps):
+        'startt the game loop runing with the given fps.'
+        
         logging.info(f'starting game loop with {fps} fps')
         self.game_running = True
         frame_time = 1 / fps
 
         while self.game_running:
             last_update = time.time()
-            self.move_snakes()
+            self.process_snakes()
             self.fill_pills()  # if pills have been eaten, fill up with new one
             self.publish_board()
             self.mqtt.loop()  # procesing mqtt network events
