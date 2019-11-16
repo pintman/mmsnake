@@ -2,7 +2,7 @@ PY=venv/bin/python
 MQTT_HOST=mqtt.eclipse.org
 NUM_SNAKES=25
 
-run: venv
+run_engine: venv
 	$(PY) msnake.py $(NUM_SNAKES)
 		
 console: venv
