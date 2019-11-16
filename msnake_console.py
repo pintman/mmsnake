@@ -3,22 +3,26 @@ import json
 import paho.mqtt.client
 import msnake
 
-pill = '.'
+pill_symbol = '.'
 width = 80
 height = 25
 
 def on_world_message(client, userdata, msg):
     world = json.loads(msg.payload)
+    snakes = world['snakes']
+    pills = world['pills']
+    fps = world['fps']
+
     s = [' '] * (width * height)  # empty screen
     
     # draw snakes
-    for snake_id in world['snakes']:
-        for x,y in world['snakes'][snake_id]['body']:
+    for snake_id in snakes:
+        for x,y in snakes[snake_id]['body']:
             s[y * width + x] = snake_id[0]
 
     # draw pills
-    for x,y in world['pills']:
-        s[y * width + x] = pill
+    for x,y in pills:
+        s[y * width + x] = pill_symbol
 
     print('-' * (width + 4))  # adding offset for left/right border
     for y in range(height):
@@ -26,7 +30,7 @@ def on_world_message(client, userdata, msg):
         line_end = line_start + width
         line = ''.join(s[line_start:line_end])
         print('|', line, '|')
-    print('-' * (width + 4))
+    print(f'| FPS:{fps} SNAKES:{len(snakes)} PILLS:{len(pills)}')
 
 def main(mqtt_host, world_topic, fps):
     mqtt = paho.mqtt.client.Client()
