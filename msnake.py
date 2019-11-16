@@ -1,6 +1,8 @@
 import time
 import random
 import json
+import logging
+
 from typing import Dict
 import paho.mqtt.client
 from paho.mqtt.client import MQTTMessage
@@ -54,7 +56,9 @@ class MSnake:
 
         self.mqtt = paho.mqtt.client.Client()
         self.mqtt.on_message = self.on_mqtt_message
+        logging.info(f'connecting to broker {mqtthost}')
         self.mqtt.connect(mqtthost)
+        logging.info(f'sub snakes at {snake_topics} and pub to {world_topic}')
         self.mqtt.subscribe(snake_topics)
         self.world_topic = world_topic
 
@@ -63,12 +67,14 @@ class MSnake:
         self.field_length = field_length
 
         self.pills = []
+        logging.debug(f"max pills {max_pills} and world size {field_length}")
         self.max_pills = max_pills
         self.fill_pills()
 
         self.game_running = False
 
     def add_snake(self, snake:Snake):
+        logging.debug(f'added snake {snake.id}')
         self.snakes[snake.id] = snake
         self.snake_bodies.extend(snake.body)
 
@@ -190,6 +196,7 @@ def test_msnake():
     assert heady == 3
 
 def main():
+    logging.basicConfig(level=logging.DEBUG)
     msnake = MSnake(MQTTHOST, TOPICS_SNAKE_MOVE, TOPIC_WORLD, 
         MAX_PILLS, FIELD_LENGTH)
     msnake.add_snake(Snake('1', 2, 2))
