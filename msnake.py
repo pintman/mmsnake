@@ -9,7 +9,7 @@ from paho.mqtt.client import MQTTMessage
 
 MQTTHOST = 'mqtt.eclipse.org'
 TOPICS_SNAKE_MOVE = 'msnake/snake/+/move'
-TOPIC_WORLD = 'msnake/snake/world'
+TOPIC_WORLD = 'msnake/world'
 MAX_PILLS = 10
 FIELD_LENGTH = 20
 FPS = 5
