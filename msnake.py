@@ -217,6 +217,7 @@ def main():
     msnake = MSnake(MQTTHOST, TOPICS_SNAKE_MOVE, TOPIC_WORLD, 
         MAX_PILLS, FIELD_LENGTH)
     msnake.add_snake(Snake('1', 2, 2))
+    msnake.add_snake(Snake('2', 2, 4))
     msnake.run(FPS)
 
 if __name__ == '__main__':
