@@ -126,7 +126,7 @@ class MSnake:
     def on_mqtt_message(self, client, userdata, message: MQTTMessage):
         _msnake, _snake, sid, _move = message.topic.split('/')
         direction = message.payload
-        print(message.topic, sid, message.payload)
+        logging.debug(f'sid:{sid} topic:{message.topic}: {message.payload}')
         snake = self.snakes[sid]
         if direction == b'up':
             snake.up()
