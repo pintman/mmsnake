@@ -147,9 +147,10 @@ class MSnake:
 
         return d
 
-    def publish_board(self):
+    def publish_board(self, fps):
         'publish snakes and pills to the world topic.'
         payload = {}
+        payload['fps'] = fps
         payload["snakes"] = self._snakes_json()
         payload["pills"] = self.pills
         
@@ -157,7 +158,7 @@ class MSnake:
 
     def run(self, fps):
         'startt the game loop runing with the given fps.'
-        
+
         logging.info(f'starting game loop with {fps} fps')
         self.game_running = True
         frame_time = 1 / fps
@@ -166,7 +167,7 @@ class MSnake:
             last_update = time.time()
             self.process_snakes()
             self.fill_pills()  # if pills have been eaten, fill up with new one
-            self.publish_board()
+            self.publish_board(fps)
             self.mqtt.loop()  # procesing mqtt network events
 
             # keep game clock in sync
