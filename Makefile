@@ -8,6 +8,9 @@ run: venv
 console: venv
 	$(PY) msnake_console.py
 
+turtle: venv
+	$(PY) turtlesnake.py
+
 start_dummy_snakes: venv
 	$(PY) dummy_snake.py $(NUM_SNAKES)
 
