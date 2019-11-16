@@ -91,16 +91,15 @@ class MSnake:
 
                 if new_head in self.pills:
                     # eat pill
-                    new_body = snake.body
+                    snake.body = [new_head] + snake.body
                     self.pills.remove(new_head)
                 elif new_head in self.snake_bodies:
                     # snake eats itself or some other snake
                     snake.die()
                 else:
                     # move forward
-                    new_body = snake.body[:-1]
+                    snake.body = [new_head] + snake.body[:-1]
 
-                snake.body = [new_head] + new_body
                 new_snake_bodies.extend(snake.body)
             else:
                 dead_snake_ids.append(snake.id)
