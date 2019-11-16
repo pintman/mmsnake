@@ -8,12 +8,7 @@ from typing import Dict
 import paho.mqtt.client
 from paho.mqtt.client import MQTTMessage
 
-MQTTHOST = 'mqtt.eclipse.org'
-TOPICS_SNAKE_MOVE = 'msnake/snake/+/move'
-TOPIC_WORLD = 'msnake/world'
-MAX_PILLS = 10
-FIELD_LENGTH = 25
-FPS = 5
+import config
 
 class Snake:
     def __init__(self, sid:str, x, y):
@@ -229,13 +224,13 @@ def test_manysnakes_large_world():
 
 def main(num_snakes):
     logging.basicConfig(format='%(levelname)s\t%(message)s', level=logging.DEBUG)
-    msnake = MSnake(MQTTHOST, TOPICS_SNAKE_MOVE, TOPIC_WORLD, 
-        MAX_PILLS, FIELD_LENGTH)
+    msnake = MSnake(config.MQTTHOST, config.TOPICS_SNAKE_MOVE, config.TOPIC_WORLD, 
+        config.MAX_PILLS, config.FIELD_LENGTH)
     logging.debug(f'adding {num_snakes} snakes.')
     for i in range(num_snakes):
         msnake.add_snake(str(i))
 
-    msnake.run(FPS)
+    msnake.run(config.FPS)
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:

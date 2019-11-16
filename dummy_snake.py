@@ -1,7 +1,8 @@
-import msnake
+import config
 import random
 import sys
 import paho.mqtt.client
+
 
 mqtt = paho.mqtt.client.Client()
 
@@ -15,8 +16,8 @@ def start_snake(sid):
     user_data = {'sid': sid}
     mqtt.user_data_set(user_data)
     mqtt.on_message = msg_received
-    mqtt.connect(msnake.MQTTHOST)
-    mqtt.subscribe(msnake.TOPIC_WORLD)
+    mqtt.connect(config.MQTTHOST)
+    mqtt.subscribe(config.TOPIC_WORLD)
     mqtt.loop_forever()
 
 def main(number):

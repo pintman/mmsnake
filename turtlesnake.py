@@ -4,7 +4,7 @@ https://docs.python.org/3/library/turtle.html
 '''
 
 import turtle
-import msnake
+import config
 import paho.mqtt.client
 import json
 import random
@@ -52,7 +52,7 @@ def random_color():
 
 def main(mqtt_host, world_topic):
     # setup turtle
-    turtle.setworldcoordinates(0,0, msnake.FIELD_LENGTH, msnake.FIELD_LENGTH)
+    turtle.setworldcoordinates(0,0, config.FIELD_LENGTH, config.FIELD_LENGTH)
     turtle.hideturtle()
     turtle.tracer(0)
     turtle.title("Turtles drawing snakes")
@@ -60,13 +60,14 @@ def main(mqtt_host, world_topic):
     mqtt = paho.mqtt.client.Client()
     mqtt.user_data_set(dict())
     mqtt.on_message = on_world_message
-    mqtt.connect(msnake.MQTTHOST)
-    mqtt.subscribe(msnake.TOPIC_WORLD)
+    mqtt.connect(config.MQTTHOST)
+    mqtt.subscribe(config.TOPIC_WORLD)
     mqtt.loop_forever()
 
 def test_turtle_run():
     import multiprocessing
     import time
+    import msnake
 
     engine = multiprocessing.Process(
         target=msnake.main,
@@ -77,7 +78,7 @@ def test_turtle_run():
 
     pt = multiprocessing.Process(
         target=main,
-        args=(msnake.MQTTHOST, msnake.TOPIC_WORLD),
+        args=(config.MQTTHOST, config.TOPIC_WORLD),
         daemon=True
     )
     pt.start()
@@ -86,4 +87,4 @@ def test_turtle_run():
     assert pt.is_alive()
 
 if __name__ == '__main__':
-    main(msnake.MQTTHOST, msnake.TOPIC_WORLD)
+    main(config.MQTTHOST, config.TOPIC_WORLD)

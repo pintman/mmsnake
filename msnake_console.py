@@ -1,7 +1,7 @@
 import time
 import json
 import paho.mqtt.client
-import msnake
+import config
 
 pill_symbol = '.'
 width = 80
@@ -49,8 +49,8 @@ def main(mqtt_host, world_topic):
     ud = {'last_update':time.time(), 'num_msgs':0, 'fps':0}
     mqtt.user_data_set(ud)
     mqtt.on_message = on_world_message
-    mqtt.connect(msnake.MQTTHOST)
-    mqtt.subscribe(msnake.TOPIC_WORLD)
+    mqtt.connect(config.MQTTHOST)
+    mqtt.subscribe(config.TOPIC_WORLD)
     mqtt.loop_forever()
 
 def test_console():
@@ -66,4 +66,4 @@ def test_console():
     print("finished")
 
 if __name__ == '__main__':
-    main(msnake.MQTTHOST, msnake.TOPIC_WORLD)
+    main(config.MQTTHOST, config.TOPIC_WORLD)
