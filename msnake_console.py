@@ -8,12 +8,21 @@ width = 80
 height = 25
 
 def on_world_message(client, userdata, msg):
+    # compute local fps
+    if time.time() - userdata['last_update'] > 1:
+        fps_local = userdata['num_msgs'] / (time.time() - userdata['last_update'])
+        userdata['last_update'] = time.time()
+        userdata['num_msgs'] = 0
+        userdata['fps'] = fps_local
+    else:
+        userdata['num_msgs'] += 1
+        fps_local = userdata['fps']
+    userdata['last_msg'] = time.time()
+
     world = json.loads(msg.payload)
     snakes = world['snakes']
     pills = world['pills']
     fps = world['fps']
-    fps_local = 1 / (time.time() - userdata['last_msg'])
-    userdata['last_msg'] = time.time()
 
     s = [' '] * (width * height)  # empty screen
     
@@ -37,7 +46,7 @@ def on_world_message(client, userdata, msg):
 
 def main(mqtt_host, world_topic):
     mqtt = paho.mqtt.client.Client()
-    ud = {'last_msg': time.time()}
+    ud = {'last_update':time.time(), 'num_msgs':0, 'fps':0}
     mqtt.user_data_set(ud)
     mqtt.on_message = on_world_message
     mqtt.connect(msnake.MQTTHOST)
