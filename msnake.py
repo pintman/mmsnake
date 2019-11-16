@@ -189,10 +189,11 @@ def test_msnake():
     msnake = MSnake(mqtthost='mqtt.eclipse.org', 
         snake_topics='test/msnake/snake/+/move', 
         world_topic='test/msnake/world')
-    snake = Snake('22', 2, 3)
-    snake.right()
-    msnake.add_snake(snake)
+    msnake.add_snake('22')
     assert '22' in msnake.snakes
+    snake = msnake.snakes['22']
+    snake.body[0] = (2,3)
+    snake.right()
 
     # start game for some seconds
     from threading import Thread
