@@ -57,7 +57,7 @@ def test_console():
     import multiprocessing
     p = multiprocessing.Process(
         target=main, 
-        args=('mqtt.eclipse.org', 'test/msnake/world', 5), 
+        args=('mqtt.eclipse.org', 'test/msnake/world'), 
         daemon=True)
     p.start()
 
