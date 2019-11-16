@@ -1,14 +1,15 @@
 PY=venv/bin/python
 MQTT_HOST=mqtt.eclipse.org
+NUM_SNAKES=25
 
 run: venv
-	$(PY) msnake.py
+	$(PY) msnake.py $(NUM_SNAKES)
 		
 console: venv
 	$(PY) msnake_console.py
 
 start_dummy_snakes: venv
-	$(PY) dummy_snake.py 5
+	$(PY) dummy_snake.py $(NUM_SNAKES)
 
 venv: requirements.txt
 	python3 -m venv venv

@@ -2,6 +2,7 @@ import time
 import random
 import json
 import logging
+import sys
 
 from typing import Dict
 import paho.mqtt.client
@@ -11,7 +12,7 @@ MQTTHOST = 'mqtt.eclipse.org'
 TOPICS_SNAKE_MOVE = 'msnake/snake/+/move'
 TOPIC_WORLD = 'msnake/world'
 MAX_PILLS = 10
-FIELD_LENGTH = 20
+FIELD_LENGTH = 25
 FPS = 5
 
 class Snake:
@@ -73,9 +74,11 @@ class MSnake:
 
         self.game_running = False
 
-    def add_snake(self, snake:Snake):
+    def add_snake(self, sid:str):
         'add a new snake to the game world.'
-        logging.debug(f'added snake {snake.id}')
+        logging.debug(f'added snake {sid}')
+        x, y = self._create_empty_field()
+        snake = Snake(sid, x, y)
         self.snakes[snake.id] = snake
         self.snake_bodies.extend(snake.body)
 
@@ -116,13 +119,19 @@ class MSnake:
 
     def create_new_pill(self):
         'create a new pill at random but empty position in the world.'
-        new_pill = None
-        while new_pill is None or new_pill in self.snake_bodies or\
-                new_pill in self.pills:
-            new_pill = (random.randint(0, self.field_length-1),
+        new_pill = self._create_empty_field()
+        self.pills.append(new_pill)
+
+    def _create_empty_field(self):
+        'Find and create any empty field (x,y) in the world.'
+        new_field = None
+        while new_field is None or new_field in self.snake_bodies or\
+                new_field in self.pills:
+            new_field = (random.randint(0, self.field_length-1),
                         random.randint(0, self.field_length-1))
 
-        self.pills.append(new_pill)
+        return new_field
+
 
     def on_mqtt_message(self, client, userdata, message: MQTTMessage):
         _msnake, _snake, sid, _move = message.topic.split('/')
@@ -218,13 +227,19 @@ def test_manysnakes_large_world():
 
     assert len(msnake.snakes) <= num_snakes
 
-def main():
+def main(num_snakes):
     logging.basicConfig(format='%(levelname)s\t%(message)s', level=logging.DEBUG)
     msnake = MSnake(MQTTHOST, TOPICS_SNAKE_MOVE, TOPIC_WORLD, 
         MAX_PILLS, FIELD_LENGTH)
-    msnake.add_snake(Snake('1', 2, 2))
-    msnake.add_snake(Snake('2', 2, 4))
+    logging.debug(f'adding {num_snakes} snakes.')
+    for i in range(num_snakes):
+        msnake.add_snake(str(i))
+
     msnake.run(FPS)
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) != 2:
+        print("python3 msnake.py NUM_SNAKES")
+        sys.exit()
+
+    main(int(sys.argv[1]))
