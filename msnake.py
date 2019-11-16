@@ -132,7 +132,6 @@ class MSnake:
 
         return new_field
 
-
     def on_mqtt_message(self, client, userdata, message: MQTTMessage):
         _msnake, _snake, sid, _move = message.topic.split('/')
         direction = message.payload
@@ -165,21 +164,21 @@ class MSnake:
         self.mqtt.publish(self.world_topic, json.dumps(payload))
 
     def run(self, fps):
-        'startt the game loop runing with the given fps.'
+        'start the game loop runing with the given fps.'
 
         logging.info(f'starting game loop with {fps} fps')
         self.game_running = True
         frame_time = 1 / fps
 
         while self.game_running:
-            last_update = time.time()
+            start_update = time.time()
             self.process_snakes()
-            self.fill_pills()  # if pills have been eaten, fill up with new one
+            self.fill_pills()  # if pills have been eaten, fill up with new ones
             self.publish_board(fps)
-            self.mqtt.loop()  # procesing mqtt network events
+            self.mqtt.loop()  # processing mqtt network events
 
             # keep game clock in sync
-            delta = time.time() - last_update
+            delta = time.time() - start_update
             if delta < frame_time:
                 time.sleep(frame_time - delta)
             else:
