@@ -6,7 +6,9 @@ MSnake is short for Multiplayer-MQTT-based Snake.
 ## Starting
 
 Enter `make run_engine` to start the server and `make console` to start an
-example visualisation on the console.
+example visualisation on the console. 
+
+Other targets are specified in [Makefile](Makefile).
 
 ## Deploying
 
