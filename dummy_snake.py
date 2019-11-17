@@ -9,7 +9,7 @@ mqtt = paho.mqtt.client.Client()
 def msg_received(client, user_data, msg):
     # message received, publishing random direction
     direction = random.choice(['up', 'down', 'left', 'right'])
-    mqtt.publish(f'msnake/snake/{user_data["sid"]}/move', direction)
+    mqtt.publish(f'mmsnake/snake/{user_data["sid"]}/move', direction)
 
 def start_snake(sid):
     print(f'starting snake with id {sid}')

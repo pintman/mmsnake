@@ -7,11 +7,11 @@ MQTTHOST = 'mqtt.eclipse.org'
 # 
 # Don't change the hierarchy of the topic!
 #
-TOPICS_SNAKE_MOVE = 'msnake/snake/+/move'
+TOPICS_SNAKE_MOVE = 'mmsnake/snake/+/move'
 
 # Topic that is used by the game engine to publish the world each frame.
 #
-TOPIC_WORLD = 'msnake/world'
+TOPIC_WORLD = 'mmsnake/world'
 
 # Maximum number of pill in the game world. Each pill eaten will immediately
 # replaced by a new one.

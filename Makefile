@@ -3,10 +3,10 @@ MQTT_HOST=mqtt.eclipse.org
 NUM_SNAKES=25
 
 run_engine: venv
-	$(PY) msnake.py $(NUM_SNAKES)
+	$(PY) mmsnake.py $(NUM_SNAKES)
 		
 console: venv
-	$(PY) msnake_console.py
+	$(PY) mmsnake_console.py
 
 turtle: venv
 	$(PY) turtlesnake.py
@@ -25,4 +25,4 @@ test: venv
 
 
 pub1:
-	mosquitto_pub -t msnake/snake/1/move -m up -h $(MQTT_HOST)
+	mosquitto_pub -t mmsnake/snake/1/move -m up -h $(MQTT_HOST)

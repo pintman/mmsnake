@@ -45,7 +45,7 @@ class Snake:
             self.direction = [-1, 0]
 
 
-class MSnake:
+class MMSnake:
     def __init__(
         self, mqtthost, snake_topics, world_topic, 
         max_pills=5, field_length=20):
@@ -128,7 +128,7 @@ class MSnake:
         return new_field
 
     def on_mqtt_message(self, client, userdata, message: MQTTMessage):
-        _msnake, _snake, sid, _move = message.topic.split('/')
+        _mmsnake, _snake, sid, _move = message.topic.split('/')
         direction = message.payload
         logging.debug(f'sid:{sid} topic:{message.topic}: {message.payload}')
         snake = self.snakes[sid]
@@ -181,62 +181,62 @@ class MSnake:
 
         self.mqtt.loop_stop()
 
-def test_msnake():
-    msnake = MSnake(mqtthost='mqtt.eclipse.org', 
-        snake_topics='test/msnake/snake/+/move', 
-        world_topic='test/msnake/world')
-    msnake.add_snake('22')
-    assert '22' in msnake.snakes
-    snake = msnake.snakes['22']
+def test_mmsnake():
+    mmsnake = MMSnake(mqtthost='mqtt.eclipse.org', 
+        snake_topics='test/mmsnake/snake/+/move', 
+        world_topic='test/mmsnake/world')
+    mmsnake.add_snake('22')
+    assert '22' in mmsnake.snakes
+    snake = mmsnake.snakes['22']
     snake.body[0] = (2,3)
     snake.right()
 
     # start game for some seconds
     from threading import Thread
-    th = Thread(target=msnake.run, args=(5,))
+    th = Thread(target=mmsnake.run, args=(5,))
     th.start()
     time.sleep(1)
-    msnake.game_running = False
+    mmsnake.game_running = False
     th.join()
     
-    headx, heady = msnake.snakes['22'].body[0]
+    headx, heady = mmsnake.snakes['22'].body[0]
     assert 2 < headx < 9
     assert heady == 3
 
 def test_manysnakes_large_world():
-    msnake = MSnake(mqtthost='mqtt.eclipse.org', 
-        snake_topics='test/msnake/snake/+/move', 
-        world_topic='test/msnake/world', 
+    mmsnake = MMSnake(mqtthost='mqtt.eclipse.org', 
+        snake_topics='test/mmsnake/snake/+/move', 
+        world_topic='test/mmsnake/world', 
         field_length=100)
 
     num_snakes = 100
     for i in range(num_snakes):
         snake = Snake(str(i), random.randint(0, 10), random.randint(0, 10))
-        msnake.add_snake(snake)
+        mmsnake.add_snake(snake)
 
     # start game for some seconds
     from threading import Thread
-    th = Thread(target=msnake.run, args=(5,))
+    th = Thread(target=mmsnake.run, args=(5,))
     th.start()
     time.sleep(3)
-    msnake.game_running = False
+    mmsnake.game_running = False
     th.join()
 
-    assert len(msnake.snakes) <= num_snakes
+    assert len(mmsnake.snakes) <= num_snakes
 
 def main(num_snakes):
     logging.basicConfig(format='%(levelname)s\t%(message)s', level=logging.DEBUG)
-    msnake = MSnake(config.MQTTHOST, config.TOPICS_SNAKE_MOVE, config.TOPIC_WORLD, 
+    mmsnake = MMSnake(config.MQTTHOST, config.TOPICS_SNAKE_MOVE, config.TOPIC_WORLD, 
         config.MAX_PILLS, config.FIELD_LENGTH)
     logging.debug(f'adding {num_snakes} snakes.')
     for i in range(num_snakes):
-        msnake.add_snake(str(i))
+        mmsnake.add_snake(str(i))
 
-    msnake.run(config.FPS)
+    mmsnake.run(config.FPS)
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print("python3 msnake.py NUM_SNAKES")
+        print("python3 mmsnake.py NUM_SNAKES")
         sys.exit()
 
     main(int(sys.argv[1]))

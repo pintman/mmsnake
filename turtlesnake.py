@@ -67,10 +67,10 @@ def main(mqtt_host, world_topic):
 def test_turtle_run():
     import multiprocessing
     import time
-    import msnake
+    import mmsnake
 
     engine = multiprocessing.Process(
-        target=msnake.main,
+        target=mmsnake.main,
         args=(5,), # snakes
         daemon=True
     )

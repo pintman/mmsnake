@@ -2,7 +2,7 @@
 
 ![screenshot](doc/mmsnake_turtlegui.png)
 
-MSnake is short for Multiplayer-MQTT-based Snake.
+MMSnake is short for Multiplayer-MQTT-based Snake.
 
 
 ## Starting
@@ -26,10 +26,10 @@ In order to run correctly an MQTT-Broker needs to be configured
 properly such that snakes cannot publish into topics they are
 not allowed to. Refer to section about `acl_file` in
 [man mosquitto.conf](https://mosquitto.org/man/mosquitto-conf-5.html).
-A line like `pattern readwrite msnake/snake/%u/move` allows for 
+A line like `pattern readwrite mmsnake/snake/%u/move` allows for 
 for reading and writing to
 the given topic for the authenticated user only. The line
-`pattern read msnake/world/` enables everybody to read the world
+`pattern read mmsnake/world/` enables everybody to read the world
 topic.
 
 [man mosquitto_passwd](https://mosquitto.org/man/mosquitto_passwd-1.html)
