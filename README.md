@@ -10,6 +10,14 @@ example visualisation on the console.
 
 ## Deploying
 
+
+### Configuration
+
+The file `config.py` holds default values and documentation about 
+configuration of the game.
+
+### MQTT
+
 In order to run correctly an MQTT-Broker needs to be configured
 properly such that snakes cannot publish into topics they are
 not allowed to. Refer to section about `acl_file` in
