@@ -182,9 +182,9 @@ class MMSnake:
         self.mqtt.loop_stop()
 
 def test_mmsnake():
-    mmsnake = MMSnake(mqtthost='mqtt.eclipse.org', 
-        snake_topics='test/mmsnake/snake/+/move', 
-        world_topic='test/mmsnake/world')
+    mmsnake = MMSnake(mqtthost='mqtt.eclipse.org',
+                      snake_topics='test_mmsnake/snake/+/move',
+                      world_topic='test_mmsnake/world')
     mmsnake.add_snake('22')
     assert '22' in mmsnake.snakes
     snake = mmsnake.snakes['22']
@@ -204,10 +204,10 @@ def test_mmsnake():
     assert heady == 3
 
 def test_manysnakes_large_world():
-    mmsnake = MMSnake(mqtthost='mqtt.eclipse.org', 
-        snake_topics='test/mmsnake/snake/+/move', 
-        world_topic='test/mmsnake/world', 
-        field_length=100)
+    mmsnake = MMSnake(mqtthost='mqtt.eclipse.org',
+                      snake_topics='test_mmsnake/snake/+/move',
+                      world_topic='test_mmsnake/world',
+                      field_length=100)
 
     num_snakes = 100
     for i in range(num_snakes):
