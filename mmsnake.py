@@ -211,8 +211,7 @@ def test_manysnakes_large_world():
 
     num_snakes = 100
     for i in range(num_snakes):
-        snake = Snake(str(i), random.randint(0, 10), random.randint(0, 10))
-        mmsnake.add_snake(snake)
+        mmsnake.add_snake(str(i))
 
     # start game for some seconds
     from threading import Thread
