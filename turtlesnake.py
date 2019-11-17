@@ -51,6 +51,10 @@ def random_color():
             random.uniform(0.5, 1))
 
 def main(mqtt_host, world_topic):
+    # change coordinate system from turtle math-based (y extends positive to 
+    # top) to screen based system (y extends positive to bottom).
+    #
+    turtle.setworldcoordinates(0, config.FIELD_LENGTH, config.FIELD_LENGTH, 0)
     # setup turtle
     turtle.setworldcoordinates(0,0, config.FIELD_LENGTH, config.FIELD_LENGTH)
     turtle.hideturtle()
