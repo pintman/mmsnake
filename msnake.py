@@ -164,13 +164,13 @@ class MSnake:
         logging.info(f'starting game loop with {fps} fps')
         self.game_running = True
         frame_time = 1 / fps
+        self.mqtt.loop_start()
 
         while self.game_running:
             start_update = time.time()
             self.process_snakes()
             self.fill_pills()  # if pills have been eaten, fill up with new ones
             self.publish_board(fps)
-            self.mqtt.loop()  # processing mqtt network events
 
             # keep game clock in sync
             delta = time.time() - start_update
@@ -178,6 +178,8 @@ class MSnake:
                 time.sleep(frame_time - delta)
             else:
                 logging.warn("frame rate too high")
+
+        self.mqtt.loop_stop()
 
 def test_msnake():
     msnake = MSnake(mqtthost='mqtt.eclipse.org', 
