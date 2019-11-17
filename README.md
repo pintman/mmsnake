@@ -13,7 +13,7 @@ example visualisation on the console.
 
 ### Configuration
 
-The file `config.py` holds default values and documentation about 
+The file [config.py](config.py) holds default values and documentation about 
 configuration of the game.
 
 ### MQTT
