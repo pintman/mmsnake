@@ -188,7 +188,7 @@ def test_mmsnake():
     mmsnake.add_snake('22')
     assert '22' in mmsnake.snakes
     snake = mmsnake.snakes['22']
-    snake.body[0] = (2,3)
+    snake.body[0] = (2, 3)
     snake.right()
 
     # start game for some seconds
