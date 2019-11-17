@@ -32,8 +32,9 @@ docker_container_stop:
 	docker rm mqtt
 
 docker_start_portainer:
-	docker run --rm -it -p 9000:9000 \
+	docker run -d -p 9000:9000 \
 		-v "/var/run/docker.sock:/var/run/docker.sock" \
+		--name portainer \
 		portainer/portainer
 
 pub1:
