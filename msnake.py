@@ -78,7 +78,7 @@ class MSnake:
         self.snake_bodies.extend(snake.body)
 
     def process_snakes(self):
-        'move all snakes. lets them eat pills. kill them if necessary.'
+        'move all snakes. let them eat pills. kill them if necessary.'
         new_snake_bodies = []
         dead_snake_ids = []
         for snake in self.snakes.values():
