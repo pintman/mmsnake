@@ -56,9 +56,8 @@ def main(mqtt_host, world_topic):
     #
     turtle.setworldcoordinates(0, config.FIELD_LENGTH, config.FIELD_LENGTH, 0)
     # setup turtle
-    turtle.setworldcoordinates(0,0, config.FIELD_LENGTH, config.FIELD_LENGTH)
     turtle.hideturtle()
-    turtle.tracer(0)
+    turtle.tracer(0)  # turn off tracing and use turtle.update() instead
     turtle.title("Turtles drawing snakes")
 
     mqtt = paho.mqtt.client.Client()
