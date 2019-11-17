@@ -24,8 +24,8 @@ test: venv
 	venv/bin/pytest -v *py
 
 docker_container_start: Dockerfile
-	docker build -t mosquitto:latest .
-	docker run -d -p 1883:1883 -p 8883:8883 --name mqtt mosquitto
+	docker build -t mosquitto_mmsnake:1 .
+	docker run -d -p 1883:1883 -p 8883:8883 --name mqtt mosquitto_mmsnake:1
 
 docker_container_stop:
 	docker stop mqtt
