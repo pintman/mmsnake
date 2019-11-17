@@ -1,4 +1,4 @@
-# MSnake
+# MMSnake
 
 MSnake is short for Multiplayer-MQTT-based Snake.
 
