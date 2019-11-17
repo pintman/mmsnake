@@ -1,5 +1,4 @@
 PY=venv/bin/python
-MQTT_HOST=mqtt.eclipse.org
 NUM_SNAKES=25
 
 run_engine: venv
@@ -36,6 +35,3 @@ docker_start_portainer:
 		-v "/var/run/docker.sock:/var/run/docker.sock" \
 		--name portainer \
 		portainer/portainer
-
-pub1:
-	mosquitto_pub -t mmsnake/snake/1/move -m up -h $(MQTT_HOST)
