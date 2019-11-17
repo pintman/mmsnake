@@ -21,6 +21,7 @@ MAX_PILLS = 10
 #
 FIELD_LENGTH = 25
 
-# Frames per second the games tries to run.
+# Frames per second the games tries to run. Each snake has 1/FPS seconds
+# to send an answer in order to be recognized the next round.
 #
 FPS = 5
