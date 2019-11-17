@@ -1,5 +1,7 @@
 # MMSnake
 
+![screenshot](doc/mmsnake_turtlegui.png)
+
 MSnake is short for Multiplayer-MQTT-based Snake.
 
 
