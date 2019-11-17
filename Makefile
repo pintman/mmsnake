@@ -31,5 +31,10 @@ docker_container_stop:
 	docker stop mqtt
 	docker rm mqtt
 
+docker_start_portainer:
+	docker run --rm -it -p 9000:9000 \
+		-v "/var/run/docker.sock:/var/run/docker.sock" \
+		portainer/portainer
+
 pub1:
 	mosquitto_pub -t mmsnake/snake/1/move -m up -h $(MQTT_HOST)
