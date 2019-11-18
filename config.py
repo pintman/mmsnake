@@ -1,6 +1,11 @@
 # The address of an mqtt broker that used by the game engine
 # and clients.
-MQTTHOST = 'mqtt.eclipse.org'
+MQTTHOST = 'localhost'
+
+# Username and password used by the engine to login into the broker.
+#
+MQTT_USER = '0'
+MQTT_PASSWORD = '123456'
 
 # Topic that the engine will look into for snakes movement. Snakes themselves
 # should publish into these topics replacing '+' by their snake id.

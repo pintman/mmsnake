@@ -47,10 +47,11 @@ class Snake:
 
 class MMSnake:
     def __init__(
-        self, mqtthost, snake_topics, world_topic, 
+        self, mqtthost, mqttuser, mqttpass, snake_topics, world_topic, 
         max_pills=5, field_length=20):
 
         self.mqtt = paho.mqtt.client.Client()
+        self.mqtt.username_pw_set(mqttuser, mqttpass)
         self.mqtt.on_message = self.on_mqtt_message
         logging.info(f'connecting to broker {mqtthost}')
         self.mqtt.connect(mqtthost)
@@ -182,7 +183,7 @@ class MMSnake:
         self.mqtt.loop_stop()
 
 def test_mmsnake():
-    mmsnake = MMSnake(mqtthost='mqtt.eclipse.org',
+    mmsnake = MMSnake(mqtthost='mqtt.eclipse.org', mqttuser='0', mqttpass='123456',
                       snake_topics='test_mmsnake/snake/+/move',
                       world_topic='test_mmsnake/world')
     mmsnake.add_snake('22')
@@ -204,7 +205,7 @@ def test_mmsnake():
     assert heady == 3
 
 def test_manysnakes_large_world():
-    mmsnake = MMSnake(mqtthost='mqtt.eclipse.org',
+    mmsnake = MMSnake(mqtthost='mqtt.eclipse.org', mqttuser='0', mqttpass='123456',
                       snake_topics='test_mmsnake/snake/+/move',
                       world_topic='test_mmsnake/world',
                       field_length=100)
@@ -225,7 +226,9 @@ def test_manysnakes_large_world():
 
 def main(num_snakes):
     logging.basicConfig(format='%(levelname)s\t%(message)s', level=logging.DEBUG)
-    mmsnake = MMSnake(config.MQTTHOST, config.TOPICS_SNAKE_MOVE, config.TOPIC_WORLD, 
+    mmsnake = MMSnake(
+        config.MQTTHOST, config.MQTT_USER, config.MQTT_PASSWORD, 
+        config.TOPICS_SNAKE_MOVE, config.TOPIC_WORLD, 
         config.MAX_PILLS, config.FIELD_LENGTH)
     logging.debug(f'adding {num_snakes} snakes.')
     for i in range(num_snakes):
