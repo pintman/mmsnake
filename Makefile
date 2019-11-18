@@ -22,8 +22,8 @@ venv: requirements.txt
 test: venv
 	venv/bin/pytest -v *py
 
-docker_container_start: Dockerfile
-	docker build -t mosquitto_mmsnake:1 .
+docker_container_start: docker/Dockerfile
+	docker build -t mosquitto_mmsnake:1 docker/
 	docker run -d -p 1883:1883 -p 8883:8883 --name mqtt mosquitto_mmsnake:1
 
 docker_container_stop:

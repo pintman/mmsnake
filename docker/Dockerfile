@@ -12,8 +12,8 @@ RUN touch passwdfile && \
     mosquitto_passwd -b passwdfile 4 123456 && \
     mosquitto_passwd -b passwdfile 5 123456
 
-COPY mosquitto/aclfile /etc/mosquitto/
-COPY mosquitto/mosquitto.conf /etc/mosquitto/
+COPY aclfile /etc/mosquitto/
+COPY mosquitto.conf /etc/mosquitto/
 
 EXPOSE 1883 8883
 
