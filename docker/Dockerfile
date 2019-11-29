@@ -1,6 +1,8 @@
 FROM alpine:3
 
-RUN apk update && apk add mosquitto
+RUN apk update && apk add mosquitto python3
+RUN python3 -m pip install --upgrade pip && \
+    python3 -m pip install bottle
 
 WORKDIR /etc/mosquitto
 
@@ -12,10 +14,13 @@ RUN touch passwdfile && \
     mosquitto_passwd -b passwdfile 4 123456 && \
     mosquitto_passwd -b passwdfile 5 123456
 
+
+COPY docker_entrypoint.sh /
 COPY aclfile /etc/mosquitto/
 COPY mosquitto.conf /etc/mosquitto/
 COPY create_mqtt_user.sh /etc/mosquitto/
+COPY web.py /
 
-EXPOSE 1883 1885 8883
+EXPOSE 1883 1885 8883 9090
 
-CMD ["mosquitto", "-c" ,"/etc/mosquitto/mosquitto.conf"]
+CMD ["/docker_entrypoint.sh"]
