@@ -14,6 +14,7 @@ RUN touch passwdfile && \
 
 COPY aclfile /etc/mosquitto/
 COPY mosquitto.conf /etc/mosquitto/
+COPY create_mqtt_user.sh /etc/mosquitto/
 
 EXPOSE 1883 1885 8883
 
