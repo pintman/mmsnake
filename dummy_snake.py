@@ -5,6 +5,8 @@ import paho.mqtt.client
 
 
 mqtt = paho.mqtt.client.Client()
+MQTTUSER = '1'
+MQTTPASS = '123456'
 
 def msg_received(client, user_data, msg):
     # message received, publishing random direction
@@ -16,6 +18,7 @@ def start_snake(sid):
     user_data = {'sid': sid}
     mqtt.user_data_set(user_data)
     mqtt.on_message = msg_received
+    mqtt.username_pw_set(MQTTUSER, MQTTPASS)
     mqtt.connect(config.MQTTHOST)
     mqtt.subscribe(config.TOPIC_WORLD)
     mqtt.loop_forever()
