@@ -63,5 +63,5 @@ function drawSnakes(snakes) {
 }
 
 
-var c = document.getElementById('canv')
+var c = document.getElementById('mmsnake_canvas')
 var ctx = c.getContext('2d')
