@@ -3,7 +3,7 @@
 //host = 'ws://localhost:1885'
 
 scale = 20
-perimeter_pill = 2
+perimeter_pill = 3
 perimeter_snakebody = 5
 width =  500
 height = 500
@@ -41,15 +41,19 @@ function drawPills(pills) {
     for(pill of pills) {
         x = pill[0]
         y = pill[1]
-        drawCircle(x, y, perimeter_pill)
+        drawCircle(x, y, perimeter_pill, filled=true)
     }
 }
 
-function drawCircle(x, y, perimeter) {
+function drawCircle(x, y, perimeter, filled=false) {
     ctx.beginPath()
     //                                  startangle, end angle
     ctx.arc(scale*x, scale*y, perimeter, 0, 2 * Math.PI)
-    ctx.stroke()
+    if(filled) {
+        ctx.fill()
+    } else {
+        ctx.stroke()
+    }
 }
 
 function drawSnakes(snakes) {
@@ -57,7 +61,7 @@ function drawSnakes(snakes) {
         for(bodypart of snakes[snake]['body']) {
             x = bodypart[0]
             y = bodypart[1]
-            drawCircle(x, y, perimeter_snakebody)
+            drawCircle(x, y, perimeter_snakebody, filled=false)
         }
     }
 }
