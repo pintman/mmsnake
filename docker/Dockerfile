@@ -15,6 +15,6 @@ RUN touch passwdfile && \
 COPY aclfile /etc/mosquitto/
 COPY mosquitto.conf /etc/mosquitto/
 
-EXPOSE 1883 8883
+EXPOSE 1883 1885 8883
 
 CMD ["mosquitto", "-c" ,"/etc/mosquitto/mosquitto.conf"]

@@ -1,5 +1,6 @@
 //host = 'mqtt://mqtt.eclipse.org'
-host = 'mqtt://mqtt.eclipse.org/mqtt'  // using web socket
+//host = 'mqtt://mqtt.eclipse.org/mqtt'  // using web socket
+//host = 'ws://localhost:1885'
 
 scale = 20
 perimeter_pill = 2
@@ -7,11 +8,17 @@ perimeter_snakebody = 5
 width =  500
 height = 500
 topic = 'mmsnake/world'
+mqtt_options = {
+    host: 'localhost',
+    port: 1885,
+    username: '1',
+    password: '123456'
+}
 
 // https://entwickler.de/online/javascript/mqtt-mit-javascript-579860931.html
 
 console.log('connecting to ' + host)
-var client  = mqtt.connect(host)
+var client  = mqtt.connect(mqtt_options)
 
 client.on('connect', function() {
     console.log('subscribing to ' + topic)
