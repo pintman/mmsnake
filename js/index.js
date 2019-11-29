@@ -17,7 +17,7 @@ mqtt_options = {
 
 // https://entwickler.de/online/javascript/mqtt-mit-javascript-579860931.html
 
-console.log('connecting to ' + host)
+console.log('connecting to %o', mqtt_options)
 var client  = mqtt.connect(mqtt_options)
 
 client.on('connect', function() {
