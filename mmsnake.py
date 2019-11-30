@@ -10,7 +10,8 @@ from paho.mqtt.client import MQTTMessage
 
 import config
 
-# TODO auto update snakes from mosquittopasswd file.
+# TODO auto update snakes from mosquittopasswd file. Maybe listen to messages on
+#      snake topic and add snakes as they appear.
 
 class Snake:
     def __init__(self, sid:str, x, y):
