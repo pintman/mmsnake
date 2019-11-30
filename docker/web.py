@@ -1,6 +1,6 @@
 import bottle
 import subprocess
-import random  # TODO provide randon number and return result in http response
+import random 
 
 create_mqtt_user_script = '/etc/mosquitto/create_mqtt_user.sh'
 scriptdir = '/etc/mosquitto/'
