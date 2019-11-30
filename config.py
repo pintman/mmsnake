@@ -4,7 +4,7 @@ MQTTHOST = 'localhost'
 
 # Username and password used by the engine to login into the broker.
 #
-MQTT_USER = '0'
+MQTT_USER = 'engine'
 MQTT_PASSWORD = '123456'
 
 # Topic that the engine will look into for snakes movement. Snakes themselves
