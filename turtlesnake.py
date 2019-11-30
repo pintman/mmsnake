@@ -11,6 +11,8 @@ import random
 
 SNAKE_BODY_SIZE = 20
 
+mqtt_user_pass = 'viewer'
+
 def on_world_message(client, userdata, msg):
     world = json.loads(msg.payload)
     snakes = world['snakes']
@@ -64,6 +66,7 @@ def main(mqtt_host, world_topic):
     mqtt = paho.mqtt.client.Client()
     mqtt.user_data_set(dict())
     mqtt.on_message = on_world_message
+    mqtt.username_pw_set(mqtt_user_pass, mqtt_user_pass)
     mqtt.connect(config.MQTTHOST)
     mqtt.subscribe(config.TOPIC_WORLD)
     mqtt.loop_forever()
