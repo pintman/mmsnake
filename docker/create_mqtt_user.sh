@@ -6,7 +6,6 @@ then
   exit
 fi
 
-#user_pass=${RANDOM}${RANDOM}${RANDOM}
 user_pass=$1
 
 echo Creating mqtt user $user_pass
