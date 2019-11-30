@@ -75,23 +75,37 @@ def test_turtle_run():
     import multiprocessing
     import time
     import mmsnake
+    import dummy_snake
 
     engine = multiprocessing.Process(
         target=mmsnake.main,
-        args=(5,), # snakes
         daemon=True
     )
     engine.start()
 
-    pt = multiprocessing.Process(
+    def start_dummies():
+        import web
+        import dummy_snake
+        for _ in range(5):
+            sid = web.create_snake()
+            dummy_snake.start_snake(sid)
+
+    dummies = multiprocessing.Process(
+        target=start_dummies,
+        daemon=True
+    )
+    dummies.start()
+
+    turtle = multiprocessing.Process(
         target=main,
         args=(config.MQTTHOST, config.TOPIC_WORLD),
         daemon=True
     )
-    pt.start()
-
+    turtle.start()
+    
     time.sleep(3)
-    assert pt.is_alive()
+    
+    assert turtle.is_alive()
 
 if __name__ == '__main__':
     main(config.MQTTHOST, config.TOPIC_WORLD)
