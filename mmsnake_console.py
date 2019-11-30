@@ -7,6 +7,9 @@ pill_symbol = '.'
 width = 80
 height = 25
 
+mqtt_user = '1'
+mqtt_passwd = '123456'
+
 def on_world_message(client, userdata, msg):
     # compute local fps
     if time.time() - userdata['last_update'] > 1:
@@ -44,8 +47,9 @@ def on_world_message(client, userdata, msg):
     print(f'| FPS(Server):{fps} FPS(local):{round(fps_local, 2)} ' \
           f'SNAKES:{len(snakes)} PILLS:{len(pills)}')
 
-def main(mqtt_host, world_topic):
+def main(mqtt_host, username, passwd, world_topic):
     mqtt = paho.mqtt.client.Client()
+    mqtt.username_pw_set(username, passwd)
     ud = {'last_update':time.time(), 'num_msgs':0, 'fps':0}
     mqtt.user_data_set(ud)
     mqtt.on_message = on_world_message
@@ -57,7 +61,7 @@ def test_console():
     import multiprocessing
     p = multiprocessing.Process(
         target=main, 
-        args=('mqtt.eclipse.org', 'test/mmsnake/world'), 
+        args=('mqtt.eclipse.org', '0', '0', 'test/mmsnake/world'), 
         daemon=True)
     p.start()
 
@@ -66,4 +70,4 @@ def test_console():
     print("finished")
 
 if __name__ == '__main__':
-    main(config.MQTTHOST, config.TOPIC_WORLD)
+    main(config.MQTTHOST, mqtt_user, mqtt_passwd, config.TOPIC_WORLD)
