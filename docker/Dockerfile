@@ -6,16 +6,11 @@ RUN python3 -m pip install --upgrade pip && \
 
 WORKDIR /etc/mosquitto
 
-# Creating some dummy users. We need at least one to allow access
-# to the board topic.
+# Creating some dummy users for the engine and viewer apps.
 #
 RUN touch passwdfile && \
-    mosquitto_passwd -b passwdfile 0 123456 && \
-    mosquitto_passwd -b passwdfile 1 123456 && \
-    mosquitto_passwd -b passwdfile 2 123456 && \
-    mosquitto_passwd -b passwdfile 3 123456 && \
-    mosquitto_passwd -b passwdfile 4 123456 && \
-    mosquitto_passwd -b passwdfile 5 123456
+    mosquitto_passwd -b passwdfile engine 123456 && \
+    mosquitto_passwd -b passwdfile viewer viewer
 
 
 COPY web.py docker_entrypoint.sh /

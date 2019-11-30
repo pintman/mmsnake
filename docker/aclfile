@@ -1,2 +1,8 @@
-#pattern read mmsnake/#
-#pattern readwrite mmsnake/snake/%u/move
+# user for the game engine
+user engine
+topic readwrite mmsnake/world
+topic read mmsnake/snake/+/move
+
+# user for viewers
+user viewer
+topic read mmsnake/world

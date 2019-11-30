@@ -11,8 +11,8 @@ topic = 'mmsnake/world'
 mqtt_options = {
     host: 'localhost',
     port: 1885,
-    username: '1',
-    password: '123456'
+    username: 'viewer',
+    password: 'viewer'
 }
 
 // https://entwickler.de/online/javascript/mqtt-mit-javascript-579860931.html
