@@ -14,7 +14,7 @@ def create_userpass():
 
     return passwd
 
-@bottle.get('/')
+@bottle.get('/create_user_pass')
 def index():
     user_pass = create_userpass()
     subprocess.call(
