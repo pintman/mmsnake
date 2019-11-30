@@ -12,6 +12,8 @@ RUN touch passwdfile && \
     mosquitto_passwd -b passwdfile engine 123456 && \
     mosquitto_passwd -b passwdfile viewer viewer
 
+# TODO add engine to the container
+
 COPY web.py /web/
 COPY views/ /web/views/
 COPY static/ /web/static/
