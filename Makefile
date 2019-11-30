@@ -31,7 +31,7 @@ docker_container_stop:
 	docker rm mqtt
 
 docker_container_create_mqtt_user:
-	docker exec -it mqtt /etc/mosquitto/create_mqtt_user.sh
+	docker exec -it mqtt /etc/mosquitto/create_mqtt_user.sh user1
 
 docker_start_portainer:
 	docker run -d -p 9000:9000 \
