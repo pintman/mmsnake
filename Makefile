@@ -33,6 +33,9 @@ docker_container_stop:
 docker_container_create_mqtt_user:
 	docker exec -it mqtt /etc/mosquitto/create_mqtt_user.sh user1
 
+docker_container_show_users:
+	docker exec -it mqtt cat /etc/mosquitto/passwdfile /etc/mosquitto/aclfile
+
 docker_start_portainer:
 	docker run -d -p 9000:9000 \
 		-v "/var/run/docker.sock:/var/run/docker.sock" \
