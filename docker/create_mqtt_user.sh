@@ -1,6 +1,14 @@
 #!/bin/sh
 
-user_pass=${RANDOM}${RANDOM}${RANDOM}
+if [[ -z $1 ]]
+then
+  echo give me password
+  exit
+fi
+
+#user_pass=${RANDOM}${RANDOM}${RANDOM}
+user_pass=$1
+
 echo Creating mqtt user $user_pass
 
 mosquitto_passwd -b passwdfile $user_pass $user_pass
