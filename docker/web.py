@@ -8,7 +8,7 @@ scriptdir = '/etc/mosquitto/'
 password_charset = 'abcdefghijklmnopqrstuvwxyz'
 password_length = 10
 
-userpass_header = 'Username_password'
+userpass_header = 'Username-Password'
 create_snake_url = 'http://localhost:9090/create_user_pass'
 
 def create_userpass():
