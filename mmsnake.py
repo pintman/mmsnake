@@ -228,6 +228,49 @@ def test_manysnakes_large_world():
 
     assert len(mmsnake.snakes) <= num_snakes
 
+def test_acl_localhost():
+    host = 'localhost'
+    import time
+
+    def msg_recvd(client, userdata, msg):
+        userdata['message received'] = True
+
+    userdata = {}
+    mqtt_viewer = paho.mqtt.client.Client(userdata=userdata)
+    mqtt_viewer.on_message = msg_recvd
+    mqtt_viewer.username_pw_set('viewer', 'viewer')
+    mqtt_viewer.connect(host)
+    mqtt_viewer.subscribe(config.TOPIC_WORLD)
+    mqtt_viewer.loop_start()
+
+    mqtt_publ = paho.mqtt.client.Client()
+    mqtt_publ.username_pw_set('viewer', 'viewer')
+    #mqtt_publ.username_pw_set('engine', '123456')
+    mqtt_publ.connect(host)
+    mqtt_publ.loop_start()
+
+    # should not be possible
+    info = mqtt_publ.publish(config.TOPIC_WORLD, 'bad world')
+    info.wait_for_publish()
+    # message will be accepted but not delivered to subscriber
+    assert info.is_published()
+    time.sleep(0.5)
+    assert len(userdata) == 0
+
+    mqtt_engine = paho.mqtt.client.Client()
+    mqtt_engine.username_pw_set('engine', '123456')
+    mqtt_engine.connect(host)
+    mqtt_engine.loop_start()
+    info = mqtt_engine.publish(config.TOPIC_WORLD, 'good world')
+    info.wait_for_publish()
+    time.sleep(0.5)
+    # engine should be allowed to post into topic
+    assert userdata['message received']
+
+    mqtt_publ.loop_stop()
+    mqtt_viewer.loop_stop()
+    mqtt_engine.loop_stop()
+
 def main():
     logging.basicConfig(format='%(levelname)s\t%(message)s', level=logging.DEBUG)
     mmsnake = MMSnake(
