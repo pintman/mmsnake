@@ -6,6 +6,9 @@ RUN python3 -m pip install --upgrade pip && \
 
 WORKDIR /etc/mosquitto
 
+# Creating some dummy users. We need at least one to allow access
+# to the board topic.
+#
 RUN touch passwdfile && \
     mosquitto_passwd -b passwdfile 0 123456 && \
     mosquitto_passwd -b passwdfile 1 123456 && \
