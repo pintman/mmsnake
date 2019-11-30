@@ -7,15 +7,15 @@
     <body>
         <h1>MMSnake</h1>
         <!-- link to same server, different port. Seems only be possible with JS-->
-        <a href="/create_user_pass" onclick="javascript:event.target.port=9090" target="_blank">
+        <a href="/create_user_pass" target="_blank">
            Create User
         </a>
 
         <canvas id='mmsnake_canvas' width='500' height='500'></canvas>
 
         <!-- from https://unpkg.com/mqtt/dist/mqtt.min.js -->
-        <script src="mqtt.min.js"></script>
+        <script src="static/mqtt.min.js"></script>
 
-        <script src='index.js'></script>
+        <script src='static/index.js'></script>
     </body>
 </html>

@@ -26,8 +26,16 @@ def create_snake():
 def test_create_snake():
     assert len(create_snake()) > 5
 
-@bottle.get('/create_user_pass')
+@bottle.get('/')
 def index():
+    return bottle.template('index')
+
+@bottle.get('/static/<filename>')
+def js(filename):
+    return bottle.static_file(filename, root='static')
+
+@bottle.get('/create_user_pass')
+def create_user_pass():
     user_pass = create_userpass()
     subprocess.call(
         create_mqtt_user_script + ' ' + user_pass, 
