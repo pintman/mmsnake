@@ -19,6 +19,5 @@ echo "user ${user_pass}" >> aclfile
 echo "topic read mmsnake/world" >> aclfile
 echo "topic readwrite mmsnake/snake/${user_pass}/move" >> aclfile
 
-# TODO seems not to reread the passwdfile
-# let mosquitto (pid 1) reread the config
-kill -SIGHUP 1
+# let mosquitto reread the config
+kill -SIGHUP $(cat /etc/mosquitto/mosquitto.pid)
