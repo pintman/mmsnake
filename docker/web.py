@@ -22,6 +22,8 @@ def index():
         cwd=scriptdir, 
         shell=True)
 
+    bottle.response.add_header('username-password', user_pass)
+
     return f"Created user {user_pass} with password {user_pass}"
 
 
