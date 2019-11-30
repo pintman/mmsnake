@@ -19,7 +19,7 @@ TOPICS_SNAKE_MOVE = 'mmsnake/snake/+/move'
 TOPIC_WORLD = 'mmsnake/world'
 
 # Maximum number of pill in the game world. Each pill eaten will immediately
-# replaced by a new one.
+# be replaced by a new one.
 MAX_PILLS = 10
 
 # Length of one side of the quadratic snake world.
