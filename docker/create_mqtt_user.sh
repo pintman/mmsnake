@@ -2,7 +2,7 @@
 
 if [[ -z $1 ]]
 then
-  echo give me password
+  echo give me username
   exit
 fi
 
