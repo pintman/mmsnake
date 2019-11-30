@@ -22,7 +22,7 @@ def index():
         cwd=scriptdir, 
         shell=True)
 
-    return "Created user " + user_pass
+    return f"Created user {user_pass} with password {user_pass}"
 
 
 if __name__ == '__main__':
