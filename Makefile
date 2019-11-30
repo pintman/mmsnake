@@ -2,7 +2,7 @@ PY=venv/bin/python
 NUM_SNAKES=25
 
 run_engine: venv
-	$(PY) mmsnake.py $(NUM_SNAKES)
+	$(PY) mmsnake.py
 		
 console: venv
 	$(PY) mmsnake_console.py

@@ -10,9 +10,6 @@ from paho.mqtt.client import MQTTMessage
 
 import config
 
-# TODO auto update snakes from mosquittopasswd file. Maybe listen to messages on
-#      snake topic and add snakes as they appear.
-
 class Snake:
     def __init__(self, sid:str, x, y):
         self.body = [(x, y)]
@@ -135,6 +132,10 @@ class MMSnake:
         _mmsnake, _snake, sid, _move = message.topic.split('/')
         direction = message.payload
         logging.debug(f'sid:{sid} topic:{message.topic}: {message.payload}')
+        if not (sid in self.snakes):
+            logging.debug(f'New snake discovered: {sid}')
+            self.add_snake(sid)
+
         snake = self.snakes[sid]
         if direction == b'up':
             snake.up()
@@ -227,21 +228,14 @@ def test_manysnakes_large_world():
 
     assert len(mmsnake.snakes) <= num_snakes
 
-def main(num_snakes):
+def main():
     logging.basicConfig(format='%(levelname)s\t%(message)s', level=logging.DEBUG)
     mmsnake = MMSnake(
         config.MQTTHOST, config.MQTT_USER, config.MQTT_PASSWORD, 
         config.TOPICS_SNAKE_MOVE, config.TOPIC_WORLD, 
         config.MAX_PILLS, config.FIELD_LENGTH)
-    logging.debug(f'adding {num_snakes} snakes.')
-    for i in range(num_snakes):
-        mmsnake.add_snake(str(i))
 
     mmsnake.run(config.FPS)
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print("python3 mmsnake.py NUM_SNAKES")
-        sys.exit()
-
-    main(int(sys.argv[1]))
+    main()
