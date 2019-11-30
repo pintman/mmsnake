@@ -2,19 +2,10 @@ import config
 import random
 import sys
 import paho.mqtt.client
-import urllib.request
-
+import web
 
 mqtt = paho.mqtt.client.Client()
-create_snake_url = 'http://localhost:9090/create_user_pass'
 
-def create_snake():
-    response = urllib.request.urlopen(create_snake_url)
-    sid = response.info()['Username-Password']
-    return sid
-
-def test_create_snake():
-    assert len(create_snake()) > 5
 
 def msg_received(client, user_data, msg):
     # message received, publishing random direction
@@ -35,7 +26,7 @@ def test_start_snake():
     import multiprocessing
     import time
 
-    sid = create_snake()
+    sid = web.create_snake()
     p = multiprocessing.Process(
         target=start_snake, 
         args=(sid,),
@@ -48,7 +39,7 @@ def main(number):
     print(f'Starting {number} snakes.')
     import multiprocessing
     for _ in range(number):
-        sid = create_snake()
+        sid = web.create_snake()
         proc = multiprocessing.Process(
             target=start_snake, 
             args=(sid,))
