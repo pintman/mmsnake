@@ -7,8 +7,8 @@ pill_symbol = '.'
 width = 80
 height = 25
 
-mqtt_user = '1'
-mqtt_passwd = '123456'
+mqtt_user = 'viewer'
+mqtt_passwd = 'viewer'
 
 def on_world_message(client, userdata, msg):
     # compute local fps
