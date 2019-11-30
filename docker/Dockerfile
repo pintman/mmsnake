@@ -18,11 +18,8 @@ RUN touch passwdfile && \
     mosquitto_passwd -b passwdfile 5 123456
 
 
-COPY docker_entrypoint.sh /
-COPY aclfile /etc/mosquitto/
-COPY mosquitto.conf /etc/mosquitto/
-COPY create_mqtt_user.sh /etc/mosquitto/
-COPY web.py /
+COPY web.py docker_entrypoint.sh /
+COPY mosquitto.conf aclfile create_mqtt_user.sh /etc/mosquitto/
 
 EXPOSE 1883 1885 8883 9090
 
