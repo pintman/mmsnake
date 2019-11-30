@@ -27,7 +27,7 @@ docker_container_start: docker/Dockerfile
 	docker run -d -p 1883:1883 -p 8883:8883 -p 1885:1885 -p 9090:9090 --name mqtt mosquitto_mmsnake:1
 
 docker_container_stop:
-	docker stop mqtt
+	docker stop --time 1 mqtt
 	docker rm mqtt
 
 docker_container_create_mqtt_user:
