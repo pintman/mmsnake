@@ -2,7 +2,7 @@ FROM alpine:3
 
 RUN apk update && apk add mosquitto python3
 RUN python3 -m pip install --upgrade pip && \
-    python3 -m pip install flask
+    python3 -m pip install flask gunicorn
 
 WORKDIR /etc/mosquitto
 
