@@ -2,7 +2,7 @@ FROM alpine:3
 
 RUN apk update && apk add mosquitto python3
 RUN python3 -m pip install --upgrade pip && \
-    python3 -m pip install bottle
+    python3 -m pip install flask
 
 WORKDIR /etc/mosquitto
 
@@ -15,7 +15,7 @@ RUN touch passwdfile && \
 # TODO add engine to the container
 
 COPY web.py /web/
-COPY views/ /web/views/
+COPY templates/ /web/templates/
 COPY static/ /web/static/
 
 COPY docker/docker_entrypoint.sh /

@@ -1,4 +1,4 @@
-import bottle
+import flask
 import subprocess
 import random 
 import urllib.request
@@ -10,6 +10,8 @@ password_length = 10
 
 userpass_header = 'Username-Password'
 create_snake_url = 'http://localhost:9090/create_user_pass'
+
+app = flask.Flask(__name__)
 
 def create_userpass():
     passwd = ''
@@ -26,15 +28,11 @@ def create_snake():
 def test_create_snake():
     assert len(create_snake()) > 5
 
-@bottle.get('/')
+@app.route('/')
 def index():
-    return bottle.template('index')
+    return flask.render_template('index.html')
 
-@bottle.get('/static/<filename>')
-def js(filename):
-    return bottle.static_file(filename, root='static')
-
-@bottle.get('/create_user_pass')
+@app.route('/create_user_pass')
 def create_user_pass():
     user_pass = create_userpass()
     subprocess.call(
@@ -42,10 +40,8 @@ def create_user_pass():
         cwd=scriptdir, 
         shell=True)
 
-    bottle.response.add_header(userpass_header, user_pass)
+    resp = flask.make_response(
+        f"Created user {user_pass} with password {user_pass}")
+    resp.headers[userpass_header] = user_pass
 
-    return f"Created user {user_pass} with password {user_pass}"
-
-
-if __name__ == '__main__':
-    bottle.run(host='0.0.0.0', port=9090)
+    return resp
