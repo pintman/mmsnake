@@ -14,23 +14,14 @@ Other targets are specified in [Makefile](Makefile).
 
 ## Deploying
 
+There is a [Dockerfile](docker/Dockerfile) that can be used to create
+a container that runs an MQTT-Broker and allows for dynamically adding
+new users that interact with the game engine. There is Javascript based
+visualisation of the game as well. Once the container is started a web
+interface is available on port 9090. The easiest way to accomplish
+this is to run `make docker_container_start`.
 
 ### Configuration
 
 The file [config.py](config.py) holds default values and documentation about 
 configuration of the game.
-
-### MQTT
-
-In order to run correctly an MQTT-Broker needs to be configured
-properly such that snakes cannot publish into topics they are
-not allowed to. Refer to section about `acl_file` in
-[man mosquitto.conf](https://mosquitto.org/man/mosquitto-conf-5.html).
-A line like `pattern readwrite mmsnake/snake/%u/move` allows for 
-for reading and writing to
-the given topic for the authenticated user only. The line
-`pattern read mmsnake/world/` enables everybody to read the world
-topic.
-
-[man mosquitto_passwd](https://mosquitto.org/man/mosquitto_passwd-1.html)
-can be used to create accounts for the acl_file configured above.
