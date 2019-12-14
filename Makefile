@@ -1,6 +1,10 @@
 PY=venv/bin/python
 NUM_SNAKES=25
 
+# name of a docker volume used to persistent data like aclfile and passwdfile.
+#
+DOCKER_VOL=mmsnake_etc_mosquitto
+
 run_engine: venv
 	$(PY) mmsnake.py
 		
@@ -24,11 +28,14 @@ test: venv
 
 docker_container_start: docker/Dockerfile
 	docker build -t mosquitto_mmsnake:1 -f docker/Dockerfile .
-	docker run -d -p 1883:1883 -p 8883:8883 -p 1885:1885 -p 9090:9090 --name mqtt mosquitto_mmsnake:1
+	docker run -d --mount type=volume,source=$(DOCKER_VOL),destination=/etc/mosquitto -p 1883:1883 -p 8883:8883 -p 1885:1885 -p 9090:9090 --name mqtt mosquitto_mmsnake:1
 
 docker_container_stop:
 	docker stop --time 1 mqtt
 	docker rm mqtt
+
+docker_container_clean: docker_container_stop
+	docker volume rm $(DOCKER_VOL)
 
 docker_container_create_mqtt_user:
 	docker exec -it mqtt /etc/mosquitto/create_mqtt_user.sh user1
