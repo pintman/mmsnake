@@ -44,6 +44,7 @@ class Snake:
         if self.direction[0] == 0:
             self.direction = [-1, 0]
 
+# TODO add support to persistent the game - e.g. wich pickle.
 
 class MMSnake:
     def __init__(
