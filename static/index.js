@@ -5,8 +5,6 @@
 scale = 20
 perimeter_pill = 3
 perimeter_snakebody = 5
-width =  500
-height = 500
 topic = 'mmsnake/world'
 mqtt_options = {
     host: 'localhost',
@@ -16,6 +14,11 @@ mqtt_options = {
 }
 
 // https://entwickler.de/online/javascript/mqtt-mit-javascript-579860931.html
+
+var c = document.getElementById('mmsnake_canvas')
+var ctx = c.getContext('2d')
+c.width = 800 // document.body.clientWidth
+c.height = 800 // document.body.clientHeight
 
 console.log('connecting to %o', mqtt_options)
 var client  = mqtt.connect(mqtt_options)
@@ -31,7 +34,7 @@ client.on('message', function(topic, message) {
 
 function drawWorld(world) {
     ctx.fillStyle = '#FFFFFF'
-    ctx.fillRect(0, 0, width, height)    
+    ctx.fillRect(0, 0, c.width, c.height)    
     ctx.fillStyle = '#0000FF'
     drawPills(world['pills'])
     drawSnakes(world['snakes'])
