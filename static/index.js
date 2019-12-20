@@ -12,6 +12,7 @@ mqtt_options = {
     username: 'viewer',
     password: 'viewer'
 }
+offset = perimeter_pill + 2  // offset in x-/y-direction
 
 // https://entwickler.de/online/javascript/mqtt-mit-javascript-579860931.html
 
@@ -35,7 +36,6 @@ client.on('message', function(topic, message) {
 function drawWorld(world) {
     ctx.fillStyle = '#FFFFFF'
     ctx.fillRect(0, 0, c.width, c.height)    
-    ctx.fillStyle = '#0000FF'
     drawPills(world['pills'])
     drawSnakes(world['snakes'])
 }
@@ -44,14 +44,15 @@ function drawPills(pills) {
     for(pill of pills) {
         x = pill[0]
         y = pill[1]
-        drawCircle(x, y, perimeter_pill, filled=true)
+        drawCircle(x, y, perimeter_pill, '#0000FF', filled=false)
     }
 }
 
-function drawCircle(x, y, perimeter, filled=false) {
+function drawCircle(x, y, perimeter, color, filled=false) {
     ctx.beginPath()
     //                                  startangle, end angle
-    ctx.arc(scale*x, scale*y, perimeter, 0, 2 * Math.PI)
+    ctx.fillStyle = color
+    ctx.arc(scale*x+offset, scale*y+offset, perimeter, 0, 2 * Math.PI)
     if(filled) {
         ctx.fill()
     } else {
