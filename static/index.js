@@ -2,7 +2,7 @@
 //host = 'mqtt://mqtt.eclipse.org/mqtt'  // using web socket
 //host = 'ws://localhost:1885'
 
-scale = 20
+scale = 10
 perimeter_pill = 3
 perimeter_snakebody = 5
 topic = 'mmsnake/world'
@@ -70,5 +70,3 @@ function drawSnakes(snakes) {
 }
 
 
-var c = document.getElementById('mmsnake_canvas')
-var ctx = c.getContext('2d')
