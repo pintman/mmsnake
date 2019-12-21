@@ -253,11 +253,12 @@ def test_manysnakes_large_world():
     mmsnake = MMSnake(mqtthost='mqtt.eclipse.org', mqttuser='0', mqttpass='123456',
                       snake_topics='test_mmsnake/snake/+/move',
                       world_topic='test_mmsnake/world',
-                      field_length=100)
+                      field_length=1000)
 
-    num_snakes = 100
+    num_snakes = 1000
     for i in range(num_snakes):
         mmsnake.add_snake(str(i))
+    assert len(mmsnake.snakes) == num_snakes
 
     # start game for some seconds
     from threading import Thread
