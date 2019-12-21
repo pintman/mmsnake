@@ -239,7 +239,7 @@ def test_mmsnake():
 
     # start game for some seconds
     from threading import Thread
-    th = Thread(target=mmsnake.run, args=(5,))
+    th = Thread(target=mmsnake.run, kwargs={'fps':5})
     th.start()
     time.sleep(1)
     mmsnake.game_running = False
@@ -262,7 +262,7 @@ def test_manysnakes_large_world():
 
     # start game for some seconds
     from threading import Thread
-    th = Thread(target=mmsnake.run, args=(5,))
+    th = Thread(target=mmsnake.run, kwargs={'fps':5})
     th.start()
     time.sleep(3)
     mmsnake.game_running = False
