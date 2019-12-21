@@ -25,6 +25,7 @@ venv: requirements.txt
 
 test: venv
 	venv/bin/pytest -v *py
+	venv/bin/python -m doctest *py
 
 docker_container_start: docker/Dockerfile
 	docker build -t mosquitto_mmsnake:1 -f docker/Dockerfile .

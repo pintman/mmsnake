@@ -11,6 +11,29 @@ from paho.mqtt.client import MQTTMessage
 import config
 
 class Snake:
+    '''
+    A snake that can crawl the world. It has body and moving direction.
+
+    >>> import mmsnake
+    >>> s = mmsnake.Snake('myid', 5,5)
+    >>> s.body
+    [(5, 5)]
+    >>> s.direction
+    [1, 0]
+    >>> s.up()
+    >>> s.body
+    [(5, 5)]
+    >>> s.direction
+    [0, -1]
+    >>> s.prepare_move()
+    (5, 4)
+    >>> s.alive
+    True
+    >>> s.die()
+    >>> s.alive
+    False
+    '''
+
     def __init__(self, sid:str, x, y):
         self.body = [(x, y)]
         self.direction = [1, 0]
@@ -47,6 +70,23 @@ class Snake:
 # TODO add support to persistent the game - e.g. wich pickle.
 
 class MMSnake:
+    '''
+    A game of Multiplay-MQTT-based snake.
+
+    >>> mmsnake = MMSnake(mqtthost='mqtt.eclipse.org', 
+    ...                   mqttuser='0', mqttpass='123456',
+    ...                   snake_topics='test_mmsnake/snake/+/move',
+    ...                   world_topic='test_mmsnake/world')
+    >>> mmsnake.field_length
+    20
+    >>> mmsnake.add_snake('mysnakeid')
+    >>> len(mmsnake.snakes)
+    1
+    >>> assert 'mysnakeid' in mmsnake.snakes  # snakes are stored in a dictionary
+    >>> snake = mmsnake.snakes['mysnakeid']
+    >>> snake.body[0] = (2, 3)
+    '''
+
     def __init__(
         self, mqtthost, mqttuser, mqttpass, snake_topics, world_topic, 
         max_pills=5, field_length=20):
