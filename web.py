@@ -21,6 +21,7 @@ def create_userpass():
     return passwd
 
 def create_snake():
+    'For Tests: Create a new snake using the web interface running on localhost.'
     response = urllib.request.urlopen(create_snake_url)
     sid = response.info()[userpass_header]
     return sid
