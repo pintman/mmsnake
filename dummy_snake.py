@@ -5,6 +5,8 @@ import paho.mqtt.client
 import web
 
 mqtt = paho.mqtt.client.Client()
+# enable logging messages
+mqtt.enable_logger()
 
 
 def msg_received(client, user_data, msg):

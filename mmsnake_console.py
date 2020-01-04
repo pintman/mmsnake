@@ -49,6 +49,7 @@ def on_world_message(client, userdata, msg):
 
 def main(mqtt_host, username, passwd, world_topic):
     mqtt = paho.mqtt.client.Client()
+    mqtt.enable_logger()
     mqtt.username_pw_set(username, passwd)
     ud = {'last_update':time.time(), 'num_msgs':0, 'fps':0}
     mqtt.user_data_set(ud)
