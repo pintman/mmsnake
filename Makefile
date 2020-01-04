@@ -24,7 +24,7 @@ venv: requirements.txt
 	venv/bin/pip install -r requirements.txt
 
 test: venv
-	venv/bin/pytest -v *py
+	venv/bin/pytest *py
 	venv/bin/python -m doctest *py
 
 docker_container_start: docker/Dockerfile
