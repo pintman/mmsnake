@@ -5,7 +5,7 @@ import config
 
 pill_symbol = '.'
 width = 80
-height = 25
+height = 50
 
 mqtt_user = 'viewer'
 mqtt_passwd = 'viewer'
