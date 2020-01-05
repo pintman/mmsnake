@@ -47,10 +47,11 @@ def on_world_message(client, userdata, msg):
     print(f'| FPS(Server):{fps} FPS(local):{round(fps_local, 2)} '
           f'SNAKES:{len(snakes)} PILLS:{len(pills)}')
 
-    top3 = ''
+    top3 = '| TOP3: '
     for sid in get_top3(snakes):
-        top3 += f'{sid[:3]} {round(snakes[sid]["lifetime"], 1)} '
-    print(f'| TOP3:', top3)
+        lifetime = snakes[sid]["lifetime"]
+        top3 += f'{sid[:3]} {round(lifetime, 1)} '
+    print(top3)
 
 def get_top3(snakes):
     return sorted(
