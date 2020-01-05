@@ -203,10 +203,11 @@ class MMSnake:
 
     def publish_board(self, fps):
         'publish snakes and pills to the world topic.'
-        payload = {}
-        payload['fps'] = fps
-        payload["snakes"] = self._snakes_json()
-        payload["pills"] = self.pills
+        payload = {
+            'fps': fps,
+            'snakes': self._snakes_json(),
+            'pills': self.pills
+        }
         
         self.mqtt.publish(self.world_topic, json.dumps(payload))
 
