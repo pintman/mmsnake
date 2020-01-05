@@ -169,7 +169,7 @@ class MMSnake:
         while new_field is None or new_field in self.snake_bodies or\
                 new_field in self.pills:
             new_field = (random.randint(0, self.field_length-1),
-                        random.randint(0, self.field_length-1))
+                         random.randint(0, self.field_length-1))
 
         return new_field
 
