@@ -44,8 +44,19 @@ def on_world_message(client, userdata, msg):
         line_end = line_start + width
         line = ''.join(s[line_start:line_end])
         print('|', line, '|')
-    print(f'| FPS(Server):{fps} FPS(local):{round(fps_local, 2)} ' \
+    print(f'| FPS(Server):{fps} FPS(local):{round(fps_local, 2)} '
           f'SNAKES:{len(snakes)} PILLS:{len(pills)}')
+
+    top3 = ''
+    for sid in get_top3(snakes):
+        top3 += f'{sid[:3]} {round(snakes[sid]["lifetime"], 1)} '
+    print(f'| TOP3:', top3)
+
+def get_top3(snakes):
+    return sorted(
+        snakes,
+        key=lambda sid: snakes[sid]['lifetime'],
+        reverse=True)[:3]
 
 def main(mqtt_host, username, passwd, world_topic):
     mqtt = paho.mqtt.client.Client()
