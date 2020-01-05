@@ -15,7 +15,10 @@ class Snake:
     A snake that can crawl the world. It has body and moving direction.
 
     >>> import mmsnake
+    >>> import time
     >>> s = mmsnake.Snake('myid', 5,5)
+    >>> time.time() - s.time_of_birth < 0.1
+    True
     >>> s.body
     [(5, 5)]
     >>> s.direction
@@ -39,6 +42,7 @@ class Snake:
         self.direction = [1, 0]
         self.alive = True
         self.id:str = sid
+        self.time_of_birth = time.time()
 
     def prepare_move(self):
         '''
@@ -191,7 +195,9 @@ class MMSnake:
         'Return snakes as dictionary that can be converted to json.'
         d = {}
         for snake in self.snakes.values():
-            d[snake.id] = { "body": snake.body, "direction": snake.direction }
+            d[snake.id] = {'body': snake.body,
+                           'direction': snake.direction,
+                           'lifetime': time.time() - snake.time_of_birth}
 
         return d
 
