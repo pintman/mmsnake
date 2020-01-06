@@ -126,7 +126,7 @@ class MMSnake:
         ...                   world_topic='test_mmsnake/world')
         >>> mmsnake.add_snake('first')
         >>> mmsnake.add_snake('second')
-        >>> mmsnake.save_snakes('test-save.dat')
+        >>> mmsnake.save_snakes('/tmp/test-save_snakes.dat')
         '''
         pickle.dump(self.snakes, open(filename, 'wb'))
         # TODO create GameState Object to save more of the MMSnake object.
@@ -143,7 +143,7 @@ class MMSnake:
         >>> mmsnake.add_snake('first')
         >>> first_body = mmsnake.snakes['first'].body
         >>> mmsnake.add_snake('second')
-        >>> mmsnake.save_snakes('test_load_snakes.dat')
+        >>> mmsnake.save_snakes('/tmp/test-load_snakes.dat')
         >>> mmsnake = None
 
         >>> mmsnake = MMSnake(mqtthost='mqtt.eclipse.org',
@@ -152,7 +152,7 @@ class MMSnake:
         ...                   world_topic='test_mmsnake/world')
         >>> len(mmsnake.snakes)
         0
-        >>> mmsnake.load_snakes('test_load_snakes.dat')
+        >>> mmsnake.load_snakes('/tmp/test-load_snakes.dat')
         >>> len(mmsnake.snakes)
         2
         >>> list(mmsnake.snakes.keys())
