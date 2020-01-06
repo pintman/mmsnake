@@ -9,6 +9,7 @@ import paho.mqtt.client
 from paho.mqtt.client import MQTTMessage
 
 import config
+import pickle
 
 class Snake:
     '''
@@ -114,6 +115,52 @@ class MMSnake:
         self.fill_pills()
 
         self.game_running = False
+
+    def save_snakes(self, filename):
+        '''
+        Save all snakes in the game to a file.
+
+        >>> mmsnake = MMSnake(mqtthost='mqtt.eclipse.org',
+        ...                   mqttuser='0', mqttpass='123456',
+        ...                   snake_topics='test_mmsnake/snake/+/move',
+        ...                   world_topic='test_mmsnake/world')
+        >>> mmsnake.add_snake('first')
+        >>> mmsnake.add_snake('second')
+        >>> mmsnake.save_snakes('test-save.dat')
+        '''
+        pickle.dump(self.snakes, open(filename, 'wb'))
+        # TODO create GameState Object to save more of the MMSnake object.
+        #      self not possible, since mqtt is no serializable (socket)
+
+    def load_snakes(self, filename):
+        '''
+        Load snakes from a file and replace them.
+
+        >>> mmsnake = MMSnake(mqtthost='mqtt.eclipse.org',
+        ...                   mqttuser='0', mqttpass='123456',
+        ...                   snake_topics='test_mmsnake/snake/+/move',
+        ...                   world_topic='test_mmsnake/world')
+        >>> mmsnake.add_snake('first')
+        >>> first_body = mmsnake.snakes['first'].body
+        >>> mmsnake.add_snake('second')
+        >>> mmsnake.save_snakes('test_load_snakes.dat')
+        >>> mmsnake = None
+
+        >>> mmsnake = MMSnake(mqtthost='mqtt.eclipse.org',
+        ...                   mqttuser='0', mqttpass='123456',
+        ...                   snake_topics='test_mmsnake/snake/+/move',
+        ...                   world_topic='test_mmsnake/world')
+        >>> len(mmsnake.snakes)
+        0
+        >>> mmsnake.load_snakes('test_load_snakes.dat')
+        >>> len(mmsnake.snakes)
+        2
+        >>> list(mmsnake.snakes.keys())
+        ['first', 'second']
+        >>> first_body == mmsnake.snakes["first"].body
+        True
+        '''
+        self.snakes = pickle.load(open(filename, 'rb'))
 
     def add_snake(self, sid:str):
         'add a new snake to the game world.'
