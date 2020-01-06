@@ -201,15 +201,50 @@ class MMSnake:
 
         return d
 
-    def publish_board(self, fps):
-        'publish snakes and pills to the world topic.'
+    def _create_json_payload(self, fps):
+        '''
+        Create the json payload that should be sent to the mqtt broker and
+        published in the world topic.
+
+        >>> import json
+        >>> mmsnake = MMSnake(mqtthost='mqtt.eclipse.org',
+        ...                   mqttuser='0', mqttpass='123456',
+        ...                   snake_topics='test_mmsnake/snake/+/move',
+        ...                   world_topic='test_mmsnake/world')
+        >>> mmsnake.add_snake('my_snakeid')
+        >>> js = mmsnake._create_json_payload(5)
+        >>> world = json.loads(js)
+        >>> list(world.keys())
+        ['fps', 'snakes', 'pills']
+        >>> world["fps"]
+        5
+        >>> len(world["pills"])
+        5
+        >>> len(world["snakes"])
+        1
+
+        Extract one snake from the list of snakes and look into parameters
+        for each snake.
+        >>> sn = world["snakes"]["my_snakeid"]
+        >>> list(sn.keys())
+        ['body', 'direction', 'lifetime']
+        >>> sn["direction"]
+        [1, 0]
+        >>> 0 < sn["lifetime"] < 0.5
+        True
+        '''
         payload = {
             'fps': fps,
             'snakes': self._snakes_json(),
             'pills': self.pills
         }
-        
-        self.mqtt.publish(self.world_topic, json.dumps(payload))
+
+        return json.dumps(payload)
+
+    def publish_board(self, fps):
+        'publish snakes and pills to the world topic.'
+
+        self.mqtt.publish(self.world_topic, self._create_json_payload(fps))
 
     def run(self, fps):
         'start the game loop runing with the given fps.'
