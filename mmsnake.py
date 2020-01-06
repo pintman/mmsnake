@@ -144,17 +144,11 @@ class MMSnake:
         >>> first_body = mmsnake.snakes['first'].body
         >>> mmsnake.add_snake('second')
         >>> mmsnake.save_snakes('/tmp/test-load_snakes.dat')
-        >>> mmsnake = None
+        >>> mmsnake.snakes.clear()
 
-        >>> mmsnake = MMSnake(mqtthost='mqtt.eclipse.org',
-        ...                   mqttuser='0', mqttpass='123456',
-        ...                   snake_topics='test_mmsnake/snake/+/move',
-        ...                   world_topic='test_mmsnake/world')
-        >>> len(mmsnake.snakes)
-        0
+        >>> mmsnake.snakes
+        {}
         >>> mmsnake.load_snakes('/tmp/test-load_snakes.dat')
-        >>> len(mmsnake.snakes)
-        2
         >>> list(mmsnake.snakes.keys())
         ['first', 'second']
         >>> first_body == mmsnake.snakes["first"].body
