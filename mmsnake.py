@@ -15,9 +15,8 @@ class Snake:
     '''
     A snake that can crawl the world. It has a body and a moving direction.
 
-    >>> import mmsnake
     >>> import time
-    >>> s = mmsnake.Snake('myid', 5,5)
+    >>> s = Snake('myid', 5,5)
     >>> time.time() - s.time_of_birth < 0.1
     True
     >>> s.body
