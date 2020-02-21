@@ -13,7 +13,7 @@ import pickle
 
 class Snake:
     '''
-    A snake that can crawl the world. It has body and moving direction.
+    A snake that can crawl the world. It has a body and a moving direction.
 
     >>> import mmsnake
     >>> import time
