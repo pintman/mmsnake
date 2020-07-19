@@ -1,4 +1,4 @@
-# The address of an mqtt broker that used by the game engine
+# The address of an mqtt broker that is used by the game engine
 # and clients.
 MQTTHOST = 'localhost'
 
